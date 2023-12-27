@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="/navbar"></div>
+<div class="container-md">
+
+    <h2 style="text-align: center" th:if=" not ${cart ne null}">Здесь пока <span class="badge text-bg-danger">ничего нет</span></h2>
+    <div class="container" th:if=" ${cart ne null}">
+        <div th:if="${cart.getProductList() != null}" class="row row-cols-1 row-cols-lg-4 align-items-stretch g-4 py-5">
+            <div th:each="product, stat : ${cart.getProductList()}" class="col">
+                <div class="card" style="width: 288px; height: 500px;">
+                    <img  th:if="${product.getPhotos() ne null}" th:src="${product.getPhotos().get(0).getLink().replace('src\main\resources\static\','/')}" class="card-img-top" style="height: 286.4px; width: 286.4px" alt="Нет фотографий">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${product.getName()}">VALUE</h5>
+                        <p class="card-text" th:if="${product.getDiscount() ne 0}" th:text="${'Скидка - '+product.getDiscount()+'%, Старая цена: '+product.getPricSell()+' руб.'}"></p>
+                        <p class="card-text" th:text="${(product.getPricSell()-(product.getPricSell()/100*product.getDiscount())) + ' руб.'}">VALUE</p>
+                        <form th:action="@{/user/carts/{id}(id=${product.getId()})}" th:method="post">
+                        <input class="btn btn-primary" type="submit" value="Удалить из корзины"></input>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2 style="text-align: end">Итого: <span class="badge text-bg-success" th:text="${totalSum + ' руб.'}"></span></h2>
+    <form th:if="${totalSum>0}" style="text-align: end; align-self: end" th:action="@{/user/carts/buy/{id}(id=${cart.getId()})}" th:method="post">
+        <input style="align-content: end" class="btn btn-primary" type="submit" value="Заказать"></input>
+    </form>
+
+</div>
+</body>
+</html>

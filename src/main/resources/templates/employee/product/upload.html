@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shops</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="/navbarEmp"></div>
+<section class="my-5">
+    <div  class="container mt-5">
+                <h2>Добавить фото к товару</h2>
+                <form th:method="post" th:action="@{/employee/images}" enctype="multipart/form-data">
+                    <div class="input-group mb-3">
+                        <input type="file" name="image" accept="image/*" class="form-control-file">
+                    </div>
+                    <div class="input-group mb-3" >
+                    <select class="form-control" name="prodID">
+                        <option th:each="prod : ${products}" th:text="${prod.getName()} " th:value="${prod.getId()}"></option>
+                    </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Загрузить</button>
+                </form>
+            </div>
+</section>
+</body>
+</html>

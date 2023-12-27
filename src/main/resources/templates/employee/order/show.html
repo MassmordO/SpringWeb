@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="/navbarAdm"></div>
+
+<div class="container mt-5 bg-body-secondary py-3 rounded">
+    <label for="id" class="text-info fs-4">Id:</label>
+    <p id="id" th:text="${order.getId()}">VALUE</p>
+
+    <label for="name" class="text-info fs-4">Номер:</label>
+    <p id="name" th:text="${order.getNumber()}">VALUE</p>
+    <label for="name" class="text-info fs-4">Адресс:</label>
+    <p id="sd" th:text="${order.getAddress()}">VALUE</p>
+    <label for="name" class="text-info fs-4">Выполнен:</label>
+    <p id="a" th:text="${order.isDone()}">VALUE</p>
+    <label for="name" class="text-info fs-4">Стоимость:</label>
+    <p id="fd" th:text="${order.getPrice() + 'руб.'}">VALUE</p>
+    <label for="name" class="text-info fs-4">Получатель:</label>
+    <p id="sf" th:text="${order.getUserAccount().getSername() + order.getUserAccount().getName()+ order.getUserAccount().getPatronymic()}">VALUE</p>
+    <label for="name" class="text-info fs-4">Товары:</label>
+    <p id="sda" th:each="prod:${order.getProducts()}" th:text="${prod.getName() + prod.getId()}">VALUE</p>
+
+</div>
+
+</body>
+</html>
